@@ -1,0 +1,43 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def plot_distributions(data, transform=None):
+    # Apply data transformation, if specified
+    if transform:
+        data = transform(data)
+        
+    mean = np.mean(data)
+    variance = np.var(data)
+    stddev = np.std(data)
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
+    
+    # Histogram
+    ax1.hist(data, bins=10, color='blue')
+    ax1.axvline(mean, color='red', label='Mean')
+    ax1.axvline(mean + stddev, color='green', linestyle='--', label='+1 Std Dev')
+    ax1.axvline(mean - stddev, color='green', linestyle='--', label='-1 Std Dev')
+    ax1.legend()
+    ax1.set_title('Histogram')
+    
+    # Box Plot
+    ax2.boxplot(data)
+    ax2.set_title('Box Plot')
+    
+    plt.show()
+
+# Original data with skewed distribution
+data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30, 40, 50]
+print("Original Data:")
+print("Mean:", np.mean(data))
+print("Variance:", np.var(data))
+print("Std Dev:", np.std(data))
+plot_distributions(data)
+
+# Data after taking the logarithm
+log_data = np.log(data)
+print("\nData after logarithmic transformation:")
+print("Mean:", np.mean(log_data))
+print("Variance:", np.var(log_data))
+print("Std Dev:", np.std(log_data))
+plot_distributions(data, np.log)
