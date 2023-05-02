@@ -1,0 +1,32 @@
+from sklearn.feature_selection import SelectKBest, f_classif
+
+# Select the top 5 features using ANOVA F-value
+selector = SelectKBest(score_func=f_classif, k=5)
+X_train_selected = selector.fit_transform(X_train, y_train)
+X_test_selected = selector.transform(X_test)
+
+# Train an SVM model with the selected features
+clf = SVC(kernel='linear')
+clf.fit(X_train_selected, y_train)
+y_pred = clf.predict(X_test_selected)
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy (selected features): {accuracy:.2f}')
+
+from sklearn.model_selection import GridSearchCV
+
+# Define the hyperparameters to search
+param_grid = {
+    'C': [0.1, 1, 10, 100],
+    'kernel': ['linear', 'rbf', 'poly'],
+    'degree': [2, 3, 4],
+    'gamma': ['scale', 'auto']
+}
+
+# Perform grid search with cross-validation
+clf = SVC()
+grid_search = GridSearchCV(clf, param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+y_pred = grid_search.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Best hyperparameters: {grid_search.best_params_}')
+print(f'Accuracy (grid search): {accuracy:.2f}')
