@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import skew, kurtosis
+
+def plot_histogram(data):
+    mean = np.mean(data)
+    stddev = np.std(data)
+    skewness = skew(data)
+    kurt = kurtosis(data)
+    
+    fig, ax = plt.subplots()
+    
+    ax.hist(data, bins=10, color='blue')
+    ax.axvline(mean, color='red', label='Mean')
+    ax.axvline(mean + stddev, color='green', linestyle='--', label='+1 Std Dev')
+    ax.axvline(mean - stddev, color='green', linestyle='--', label='-1 Std Dev')
+    ax.legend()
+    ax.set_title('Histogram')
+    
+    print("Mean:", mean)
+    print("Std Dev:", stddev)
+    print("Skewness:", skewness)
+    print("Kurtosis:", kurt)
+    
+    plt.show()
+
+# Normal distribution
+normal_data = np.random.normal(size=100)
+print("Normal Distribution:")
+plot_histogram(normal_data)
+
+# Skewed distribution
+skewed_data = np.concatenate([np.random.normal(size=50), np.random.normal(loc=10, size=50)])
+print("\nSkewed Distribution:")
+plot_histogram(skewed_data)
