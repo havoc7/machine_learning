@@ -1,0 +1,6 @@
+# Train an SVM model with a radial basis function (RBF) kernel
+clf = SVC(kernel='rbf')
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy (RBF kernel): {accuracy:.2f}')
