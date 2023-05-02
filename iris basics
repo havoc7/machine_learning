@@ -1,0 +1,26 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
+
+# Load the iris dataset
+iris = sns.load_dataset("iris")
+
+# Group the data by species and extract the petal length for each group
+setosa_petal_length = iris[iris.species == "setosa"]["petal_length"]
+versicolor_petal_length = iris[iris.species == "versicolor"]["petal_length"]
+virginica_petal_length = iris[iris.species == "virginica"]["petal_length"]
+
+# Calculate the mean and standard deviation for each group
+setosa_mean, setosa_std = np.mean(setosa_petal_length), np.std(setosa_petal_length)
+versicolor_mean, versicolor_std = np.mean(versicolor_petal_length), np.std(versicolor_petal_length)
+virginica_mean, virginica_std = np.mean(virginica_petal_length), np.std(virginica_petal_length)
+
+# Create a histogram of petal length for each species and overlay a normal distribution with the same mean and standard deviation
+sns.histplot(data=iris, x="petal_length", hue="species", kde=False, element="step")
+x = np.linspace(0, 7, 100)
+plt.plot(x, norm.pdf(x, setosa_mean, setosa_std), label="setosa")
+plt.plot(x, norm.pdf(x, versicolor_mean, versicolor_std), label="versicolor")
+plt.plot(x, norm.pdf(x, virginica_mean, virginica_std), label="virginica")
+plt.legend()
+plt.show()
