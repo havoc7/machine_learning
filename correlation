@@ -1,0 +1,27 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import statistics
+import seaborn as sns
+from scipy.stats import linregress
+from scipy import stats
+
+# Let's first create a empty list to store the weight and heigh of people
+height = []
+weight = []
+
+for i in range(15):
+    height.append(np.random.randint(165,175))
+    weight.append(np.random.randint(70,100))
+    
+# Let's find the correlation
+correlation = stats.pearsonr(height,weight)
+slope, intercept, r, p, se = linregress(height, weight)
+
+print("Slope value : ",slope)
+print("Intercept value : ",intercept)
+print("r value : ",r)
+print("p value : ",p)
+print("Correlation is:",correlation)
+
+plt.scatter(x = height,y = weight)
