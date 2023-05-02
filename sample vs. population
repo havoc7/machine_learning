@@ -1,0 +1,22 @@
+import numpy as np
+
+# Define the sample data
+data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Calculate the mean, variance, and standard deviation of the sample
+sample_mean = np.mean(data)
+sample_var = np.var(data, ddof=1) # specify ddof=1 to use sample variance instead of population variance
+sample_std = np.std(data, ddof=1)
+
+# Calculate the mean and variance of the population using the sample mean and variance as an estimate
+pop_mean = sample_mean
+pop_var = sample_var * len(data) / (len(data) - 1) # multiply by len(data) / (len(data) - 1) to estimate the population variance from the sample variance
+
+# Compare the sample and population variance
+print("Sample variance:", sample_var)
+print("Population variance:", pop_var)
+
+# Explain the differences between the sample and population variance
+print("The difference between the sample and population variance is due to the estimation of the population variance from the sample variance. 
+       The sample variance is a biased estimator of the population variance, meaning that it tends to overestimate the population variance. 
+       To correct for this bias, the sample variance is divided by (n - 1) instead of n, where n is the sample size.")
