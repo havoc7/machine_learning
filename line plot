@@ -1,0 +1,12 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the mpg dataset
+mpg = sns.load_dataset("mpg")
+
+# Group the data by model year and origin, and calculate the mean mpg for each group
+mpg_by_year_origin = mpg.groupby(["model_year", "origin"]).agg({"mpg": "mean"}).reset_index()
+
+# Create a line plot showing the relationship between model year and average mpg, with different colors and markers for each origin value
+sns.lineplot(data=mpg_by_year_origin, x="model_year", y="mpg", hue="origin", style="origin", markers=True)
+plt.show()
