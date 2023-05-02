@@ -1,0 +1,36 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from imblearn.over_sampling import RandomOverSampler
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+data = pd.read_csv('/content/creditcard.xlsx')
+X_train, X_test, y_train, y_test = train_test_split(data.drop('Class', axis=1), data['Class'], test_size=0.2, random_state=42)
+oversampler = RandomOverSampler(random_state=42)
+X_train_resampled, y_train_resampled = oversampler.fit_resample(X_train, y_train)
+clf = SVC(class_weight='balanced', kernel='rbf')
+clf.fit(X_train_resampled, y_train_resampled)
+from sklearn.impute import SimpleImputer
+
+# Fill missing values with mean
+imputer = SimpleImputer(strategy="mean")
+X_train = imputer.fit_transform(X_train)
+X_test = imputer.transform(X_test)
+imputer = SimpleImputer(strategy="mean")
+y_train = imputer.fit_transform(y_train.to_numpy().reshape(-1, 1)).ravel()
+y_test = imputer.transform(y_test.to_numpy().reshape(-1, 1)).ravel()
+
+from sklearn.preprocessing import Binarizer
+
+y_pred = clf.predict(X_test)
+binarizer = Binarizer(threshold=0.5)
+y_test_binary = binarizer.fit_transform(y_test.reshape(-1, 1)).ravel()
+accuracy = clf.score(X_test, y_test_binary)
+precision = precision_score(y_test_binary, y_pred)
+recall = recall_score(y_test_binary, y_pred)
+f1 = f1_score(y_test_binary, y_pred)
+
+print("Accuracy: %.2f%%" % (accuracy * 100.0))
+print("Precision: %.2f%%" % (precision * 100.0))
+print("Recall: %.2f%%" % (recall * 100.0))
+print("F1-score: %.2f%%" % (f1 * 100.0))
