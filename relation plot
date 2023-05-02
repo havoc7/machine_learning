@@ -1,0 +1,12 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Loading the dataset
+df = sns.load_dataset('titanic')
+# Printing the first 4 rows of dataframe
+df.head(4)
+
+# Let's plot relation plot 
+sns.relplot(x ='age',y ='fare',hue ='class',data =df).set(title='Relation Plot between age and fare')
