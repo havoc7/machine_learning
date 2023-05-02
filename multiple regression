@@ -1,0 +1,16 @@
+import pandas as pd
+import statsmodels.api as sm
+
+# load the survey data into a pandas dataframe
+data = pd.read_csv('survey_data.csv')
+
+# perform a multiple regression analysis on the data to determine the factors that drive customer satisfaction
+X = data[['price', 'quality', 'customer_service']]
+y = data['satisfaction']
+#add a constant term to independent variable
+X = sm.add_constant(X)
+#perform multiple regression
+model = sm.OLS(y, X).fit()
+#print result of analysis
+coefficients = model.params
+print(coefficients)
