@@ -1,0 +1,19 @@
+import numpy as np
+from scipy.cluster.hierarchy import linkage, dendrogram
+x=np.array([[2,3],[1,4],[4,5],[5,6],[7,5],[8,7]])
+distances=np.zeros((x.shape[0],x.shape[0]))
+def euclidean_distance(x,y):
+  return np.sqrt(np.sum((x-y)**2))
+for i in range(x.shape[0]):
+    for j in range(i+1,x.shape[0]):
+        distances[i,j]=euclidean_distance(x[i],x[j])
+        distances[j,i]=distances[i,j]
+        
+print("Distance Matrix")
+print(distances)
+Z=linkage(x, method='single')     #method can be one of these 3 : single, average, complete
+print("\nLinkage Matrix")
+print(Z)
+dendrogram(Z)
+import matplotlib.pyplot as plt
+plt.show()
