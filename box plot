@@ -1,0 +1,9 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the "tips" dataset
+tips = sns.load_dataset("tips")
+
+# Create a boxplot showing the distribution of total bill for each combination of day and time
+sns.boxplot(data=tips, x="day", y="total_bill", hue="time")
+plt.show()
