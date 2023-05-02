@@ -1,0 +1,6 @@
+# Train an SVM model with a polynomial kernel
+clf = SVC(kernel='poly', degree=3)
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy (polynomial kernel): {accuracy:.2f}')
