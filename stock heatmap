@@ -1,0 +1,27 @@
+stock_price = []
+interest_rate = []
+inflation = []
+
+# Let's generate some random value of stock_price,interest_rate and inflation
+for i in range(10):
+    stock_price.append(np.random.randint(100,1000))
+    interest_rate.append(np.random.randint(150,1000))
+    inflation.append(np.random.randint(20,1000))
+
+# Let's create a Dictionary
+dict = {'Stock_price':stock_price,
+        'Interest_Rate':interest_rate,
+        'Inflation':inflation}
+
+# Creating a dataframe
+df = pd.DataFrame(dict)
+df.head(5)
+
+# Let's plot heatmap to visualize the correlation between fetures
+fig,ax = plt.subplots(figsize = (8,4))
+sns.heatmap(df.corr(),annot=True)
+
+fig,ax = plt.subplots(1,2,figsize=(15,4))
+ax[0].scatter(x = df['Interest_Rate'],y = df['Inflation'])
+ax[1].scatter(x = df['Stock_price'],y = df['Interest_Rate'])
+
